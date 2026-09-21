@@ -1,0 +1,530 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Agencia Mares — Marketing 360°</title>
+  <meta
+    name="description"
+    content="Agencia Mares: asesoría y acompañamiento en redes, creación de contenido, pauta, branding, podcast, sitios web y cubrimiento de eventos. Todo lo que tu marca necesita para crecer."
+  />
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Rubik:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <a href="#contenido" class="skip-link">Saltar al contenido</a>
+
+  <!-- ===================== HEADER ===================== -->
+  <header class="site-header" data-header>
+    <div class="container site-header__inner">
+      <a href="#top" class="brand">
+        <span class="brand__mark" aria-hidden="true"></span>
+        Agencia Mares
+      </a>
+
+      <button
+        type="button"
+        class="menu-toggle"
+        data-menu-toggle
+        aria-expanded="false"
+        aria-controls="site-menu"
+      >
+        <span class="menu-toggle__label">Menú</span>
+        <span class="menu-toggle__box" aria-hidden="true">
+          <span></span>
+          <span></span>
+        </span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ===================== FULLSCREEN MENU ===================== -->
+  <nav id="site-menu" class="site-menu" data-menu aria-label="Navegación principal" hidden>
+    <ul class="site-menu__list">
+      <li><a href="#servicios" data-menu-link>Servicios</a></li>
+      <li><a href="#clientes" data-menu-link>Clientes</a></li>
+      <li><a href="#cotizador" data-menu-link>Cotizador</a></li>
+      <li><a href="#alianzas" data-menu-link>Alianzas</a></li>
+      <li><a href="#plantillas" data-menu-link>Plantillas</a></li>
+      <li><a href="#contacto" data-menu-link>Contacto</a></li>
+    </ul>
+    <div class="site-menu__footer">
+      <a href="mailto:hola@agenciamares.com">hola@agenciamares.com</a>
+      <a href="tel:+525500000000">+52 55 0000 0000</a>
+    </div>
+  </nav>
+
+  <main id="contenido">
+    <!-- ===================== HERO ===================== -->
+    <section id="top" class="hero">
+      <div class="hero__blobs" aria-hidden="true">
+        <span class="hero__blob hero__blob--blue"></span>
+        <span class="hero__blob hero__blob--orange"></span>
+      </div>
+      <div class="container hero__inner">
+        <span class="eyebrow eyebrow--on-dark" data-reveal>Agencia de marketing 360°</span>
+        <h1 class="hero__title" data-hero-title>
+          Hacemos que tu marca navegue con rumbo claro
+        </h1>
+        <p class="hero__lead" data-reveal>
+          Somos Agencia Mares: asesoría, contenido, pauta, branding, podcast,
+          sitios web y cubrimiento de eventos — todo lo que tu marca necesita
+          para crecer, en un solo equipo.
+        </p>
+        <div class="hero__actions" data-reveal>
+          <a href="#servicios" class="btn btn-gradient" data-magnetic>
+            Ver servicios
+            <svg width="18" height="18" aria-hidden="true"><use href="assets/icons.svg#icon-arrow-right"></use></svg>
+          </a>
+          <a href="#cotizador" class="btn btn-outline" data-magnetic>Cotiza tu proyecto</a>
+        </div>
+      </div>
+      <a href="#servicios" class="scroll-cue" aria-label="Ir a la siguiente sección">
+        <span></span>
+      </a>
+    </section>
+
+    <!-- ===================== MARQUEE ===================== -->
+    <section class="marquee" aria-label="Áreas de servicio">
+      <div class="marquee__track" data-marquee aria-hidden="true">
+        <span>Asesoría</span><span>·</span>
+        <span>Contenido</span><span>·</span>
+        <span>Pauta</span><span>·</span>
+        <span>Branding</span><span>·</span>
+        <span>Podcast</span><span>·</span>
+        <span>Web</span><span>·</span>
+        <span>Eventos</span><span>·</span>
+        <span>Asesoría</span><span>·</span>
+        <span>Contenido</span><span>·</span>
+        <span>Pauta</span><span>·</span>
+        <span>Branding</span><span>·</span>
+        <span>Podcast</span><span>·</span>
+        <span>Web</span><span>·</span>
+        <span>Eventos</span><span>·</span>
+      </div>
+      <p class="sr-only">Servicios: Asesoría, Contenido, Pauta, Branding, Podcast, Web, Eventos.</p>
+    </section>
+
+    <!-- ===================== SERVICIOS ===================== -->
+    <section id="servicios" class="services">
+      <div class="container">
+        <div class="section-heading" data-reveal>
+          <span class="eyebrow">Servicios</span>
+          <h2>Todo lo que tu marca necesita, en un solo lugar</h2>
+          <p>Desde el diagnóstico inicial hasta la ejecución y el contenido en el día a día.</p>
+        </div>
+
+        <ul class="services__grid" data-reveal-group>
+          <!-- Asesoría y Acompañamiento — split card -->
+          <li class="service-card service-card--split" data-reveal-item>
+            <div class="service-card__col">
+              <div class="service-card__icon">
+                <svg width="24" height="24" aria-hidden="true"><use href="assets/icons.svg#icon-users"></use></svg>
+              </div>
+              <h3>Asesoría y Acompañamiento</h3>
+              <p>Para marcas que gestionan sus redes sociales y quieren hacerlo con criterio experto.</p>
+              <h4>Asesoría</h4>
+              <ul>
+                <li><svg width="16" height="16" aria-hidden="true"><use href="assets/icons.svg#icon-check"></use></svg><span>Diagnóstico inicial de marca</span></li>
+                <li><svg width="16" height="16" aria-hidden="true"><use href="assets/icons.svg#icon-check"></use></svg><span>Feedback y recomendaciones</span></li>
+                <li><svg width="16" height="16" aria-hidden="true"><use href="assets/icons.svg#icon-check"></use></svg><span>Gestión de alianzas, si se requiere</span></li>
+              </ul>
+            </div>
+            <div class="service-card__col">
+              <h4 style="margin-top: 2.75rem;">Acompañamiento</h4>
+              <ul>
+                <li><svg width="16" height="16" aria-hidden="true"><use href="assets/icons.svg#icon-check"></use></svg><span>Plantillas de contenido</span></li>
+                <li><svg width="16" height="16" aria-hidden="true"><use href="assets/icons.svg#icon-check"></use></svg><span>Seguimiento por WhatsApp</span></li>
+                <li><svg width="16" height="16" aria-hidden="true"><use href="assets/icons.svg#icon-check"></use></svg><span>Seguimiento continuo del progreso</span></li>
+              </ul>
+            </div>
+          </li>
+
+          <li class="service-card" data-reveal-item>
+            <div class="service-card__icon">
+              <svg width="24" height="24" aria-hidden="true"><use href="assets/icons.svg#icon-camera"></use></svg>
+            </div>
+            <h3>Creación de Contenido</h3>
+            <p>Fotografía y/o video, orgánico o profesional, adaptado a lo que tu marca necesita.</p>
+            <ul>
+              <li><svg width="16" height="16" aria-hidden="true"><use href="assets/icons.svg#icon-check"></use></svg><span>Sesión por contenido (1–2 horas)</span></li>
+              <li><svg width="16" height="16" aria-hidden="true"><use href="assets/icons.svg#icon-check"></use></svg><span>Paquetes por media jornada, según programación y cantidad</span></li>
+              <li><svg width="16" height="16" aria-hidden="true"><use href="assets/icons.svg#icon-check"></use></svg><span><a href="#creadoras" style="text-decoration: underline;">Red de creadoras</a> UGC y de alcance</span></li>
+            </ul>
+          </li>
+
+          <li class="service-card" data-reveal-item>
+            <div class="service-card__icon">
+              <svg width="24" height="24" aria-hidden="true"><use href="assets/icons.svg#icon-megaphone"></use></svg>
+            </div>
+            <h3>Pauta</h3>
+            <p>Gestión de pauta en Meta, Google Ads y TikTok, con foco en retorno.</p>
+            <ul>
+              <li><svg width="16" height="16" aria-hidden="true"><use href="assets/icons.svg#icon-check"></use></svg><span>Diagnóstico y definición de presupuesto</span></li>
+              <li><svg width="16" height="16" aria-hidden="true"><use href="assets/icons.svg#icon-check"></use></svg><span>Plan de pauta a la medida</span></li>
+              <li><svg width="16" height="16" aria-hidden="true"><use href="assets/icons.svg#icon-check"></use></svg><span>Escalabilidad según rendimiento</span></li>
+            </ul>
+          </li>
+
+          <li class="service-card" data-reveal-item>
+            <div class="service-card__icon">
+              <svg width="24" height="24" aria-hidden="true"><use href="assets/icons.svg#icon-palette"></use></svg>
+            </div>
+            <h3>Branding</h3>
+            <p>Construimos identidades de marca completas, desde cero o como refresh.</p>
+            <ul>
+              <li><svg width="16" height="16" aria-hidden="true"><use href="assets/icons.svg#icon-check"></use></svg><span>Desarrollo de identidad y naming</span></li>
+              <li><svg width="16" height="16" aria-hidden="true"><use href="assets/icons.svg#icon-check"></use></svg><span>Logo, tipografías y elementos gráficos</span></li>
+              <li><svg width="16" height="16" aria-hidden="true"><use href="assets/icons.svg#icon-check"></use></svg><span>Mockups y manual básico de marca</span></li>
+            </ul>
+          </li>
+
+          <li class="service-card" data-reveal-item>
+            <div class="service-card__icon">
+              <svg width="24" height="24" aria-hidden="true"><use href="assets/icons.svg#icon-mic"></use></svg>
+            </div>
+            <h3>Podcast</h3>
+            <p>Producimos tu podcast de principio a fin, listo para lanzar.</p>
+            <ul>
+              <li><svg width="16" height="16" aria-hidden="true"><use href="assets/icons.svg#icon-check"></use></svg><span>Producción completa del podcast</span></li>
+              <li><svg width="16" height="16" aria-hidden="true"><use href="assets/icons.svg#icon-check"></use></svg><span>Estrategia de lanzamiento, expectativa y difusión</span></li>
+              <li><svg width="16" height="16" aria-hidden="true"><use href="assets/icons.svg#icon-check"></use></svg><span>Identidad gráfica del programa</span></li>
+            </ul>
+          </li>
+
+          <li class="service-card" data-reveal-item>
+            <div class="service-card__icon">
+              <svg width="24" height="24" aria-hidden="true"><use href="assets/icons.svg#icon-globe"></use></svg>
+            </div>
+            <h3>Página Web</h3>
+            <p>Sitios a la medida de tu marca, pensados para convertir visitas en clientes.</p>
+            <ul>
+              <li><svg width="16" height="16" aria-hidden="true"><use href="assets/icons.svg#icon-check"></use></svg><span>Diseño a la medida de tu marca</span></li>
+              <li><svg width="16" height="16" aria-hidden="true"><use href="assets/icons.svg#icon-check"></use></svg><span>Optimizado para conversión y velocidad</span></li>
+              <li><svg width="16" height="16" aria-hidden="true"><use href="assets/icons.svg#icon-check"></use></svg><span>Integrado con tus redes y campañas de pauta</span></li>
+            </ul>
+          </li>
+
+          <li class="service-card" data-reveal-item>
+            <div class="service-card__icon">
+              <svg width="24" height="24" aria-hidden="true"><use href="assets/icons.svg#icon-calendar"></use></svg>
+            </div>
+            <h3>Cubrimiento de Eventos</h3>
+            <p>Promoción, comunicación y registro audiovisual de tu evento en vivo.</p>
+            <ul>
+              <li><svg width="16" height="16" aria-hidden="true"><use href="assets/icons.svg#icon-check"></use></svg><span>Promoción y comunicación del evento</span></li>
+              <li><svg width="16" height="16" aria-hidden="true"><use href="assets/icons.svg#icon-check"></use></svg><span>Fotografía y video</span></li>
+              <li><svg width="16" height="16" aria-hidden="true"><use href="assets/icons.svg#icon-check"></use></svg><span>Grabación de liveset</span></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===================== RED DE CREADORAS ===================== -->
+    <section id="creadoras" class="creators">
+      <div class="container">
+        <div class="creators__intro" data-reveal>
+          <span class="eyebrow">Red de creadoras</span>
+          <h2>Encuentra el perfil que tu marca necesita</h2>
+          <p>
+            Creadoras UGC que muestran la experiencia real con tu marca, y
+            creadoras enfocadas en alcance según sus números. Filtra por
+            perfil para encontrar el match ideal.
+          </p>
+        </div>
+
+        <div class="creators__filters" role="group" aria-label="Filtrar creadoras por perfil" data-filters>
+          <button type="button" class="filter-pill" data-filter-reset aria-pressed="true">Todas</button>
+          <button type="button" class="filter-pill" data-filter-group="gender" data-filter-value="mujer" aria-pressed="false">Mujeres</button>
+          <button type="button" class="filter-pill" data-filter-group="gender" data-filter-value="hombre" aria-pressed="false">Hombres</button>
+          <button type="button" class="filter-pill" data-filter-group="kids" data-filter-value="si" aria-pressed="false">Con hijos</button>
+          <button type="button" class="filter-pill" data-filter-group="pets" data-filter-value="si" aria-pressed="false">Con mascotas</button>
+        </div>
+
+        <p class="sr-only" role="status" data-filter-status></p>
+
+        <ul class="creators__grid" data-creators-grid>
+          <li class="creator-card" data-gender="mujer" data-kids="no" data-pets="si">
+            <div class="creator-card__avatar" aria-hidden="true">CR</div>
+            <h3>Camila R.</h3>
+            <span class="creator-card__meta">12.4K seguidores · UGC</span>
+            <p>Contenido lifestyle con su perro. 6 videos de marca realizados.</p>
+          </li>
+          <li class="creator-card" data-gender="hombre" data-kids="si" data-pets="no">
+            <div class="creator-card__avatar" aria-hidden="true">AT</div>
+            <h3>Andrés T.</h3>
+            <span class="creator-card__meta">8.9K seguidores · UGC</span>
+            <p>Contenido familiar y de rutina diaria. 5 reels de marca realizados.</p>
+          </li>
+          <li class="creator-card" data-gender="mujer" data-kids="si" data-pets="si">
+            <div class="creator-card__avatar" aria-hidden="true">VG</div>
+            <h3>Valentina G.</h3>
+            <span class="creator-card__meta">21K seguidores · Alcance</span>
+            <p>Especialista en contenido gastronómico. 12 colaboraciones de marca.</p>
+          </li>
+          <li class="creator-card" data-gender="hombre" data-kids="no" data-pets="no">
+            <div class="creator-card__avatar" aria-hidden="true">JM</div>
+            <h3>Julián M.</h3>
+            <span class="creator-card__meta">15K seguidores · Alcance</span>
+            <p>Contenido de lifestyle y tendencias. 9 videos de marca realizados.</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===================== CLIENTES (pinned horizontal) ===================== -->
+    <section id="clientes" class="clients" data-clients>
+      <div class="clients__heading container" data-reveal>
+        <span class="eyebrow">Clientes</span>
+        <h2>Marcas que ya navegan con nosotros</h2>
+      </div>
+
+      <div class="clients__viewport" data-clients-viewport>
+        <ul class="clients__track" data-clients-track>
+          <li class="client-card"><span class="client-card__mark">Veredal</span><span class="client-card__tag">Cliente</span><p>Parte de las marcas que confían su comunicación a Agencia Mares.</p></li>
+          <li class="client-card"><span class="client-card__mark">Cosku</span><span class="client-card__tag">Cliente</span><p>Parte de las marcas que confían su comunicación a Agencia Mares.</p></li>
+          <li class="client-card"><span class="client-card__mark">Beat</span><span class="client-card__tag">Cliente</span><p>Parte de las marcas que confían su comunicación a Agencia Mares.</p></li>
+          <li class="client-card"><span class="client-card__mark">Lucía Bakery</span><span class="client-card__tag">Cliente</span><p>Parte de las marcas que confían su comunicación a Agencia Mares.</p></li>
+          <li class="client-card"><span class="client-card__mark">Coffee Party</span><span class="client-card__tag">Cliente</span><p>Parte de las marcas que confían su comunicación a Agencia Mares.</p></li>
+          <li class="client-card"><span class="client-card__mark">Fuds</span><span class="client-card__tag">Cliente</span><p>Parte de las marcas que confían su comunicación a Agencia Mares.</p></li>
+          <li class="client-card"><span class="client-card__mark">Proyectados</span><span class="client-card__tag">Cliente</span><p>Parte de las marcas que confían su comunicación a Agencia Mares.</p></li>
+        </ul>
+      </div>
+
+      <div class="container clients__cta" data-reveal>
+        <a href="#" class="btn btn-secondary">
+          Ver portafolio completo
+          <svg width="18" height="18" aria-hidden="true"><use href="assets/icons.svg#icon-arrow-right"></use></svg>
+        </a>
+      </div>
+    </section>
+
+    <!-- ===================== COTIZADOR ===================== -->
+    <section id="cotizador" class="quote">
+      <div class="container quote__grid">
+        <div class="quote__intro" data-reveal>
+          <span class="eyebrow">Cotizador</span>
+          <h2>Arma tu cotización en minutos</h2>
+          <p>Elige los servicios que te interesan y descarga un resumen en PDF. Te contactamos para afinar el presupuesto.</p>
+          <ul>
+            <li><svg width="18" height="18" aria-hidden="true"><use href="assets/icons.svg#icon-check"></use></svg><span>Elige uno o varios servicios</span></li>
+            <li><svg width="18" height="18" aria-hidden="true"><use href="assets/icons.svg#icon-check"></use></svg><span>Cuéntanos sobre tu proyecto</span></li>
+            <li><svg width="18" height="18" aria-hidden="true"><use href="assets/icons.svg#icon-check"></use></svg><span>Descarga tu resumen en PDF</span></li>
+            <li><svg width="18" height="18" aria-hidden="true"><use href="assets/icons.svg#icon-check"></use></svg><span>Te escribimos para afinar el presupuesto</span></li>
+          </ul>
+        </div>
+
+        <form class="quote-form" data-quote-form novalidate data-reveal>
+          <fieldset>
+            <legend>Tus datos</legend>
+            <div class="field-row">
+              <div class="field">
+                <label for="q-name">Nombre completo *</label>
+                <input type="text" id="q-name" name="name" required autocomplete="name" />
+              </div>
+              <div class="field">
+                <label for="q-brand">Marca / Empresa</label>
+                <input type="text" id="q-brand" name="brand" autocomplete="organization" />
+              </div>
+            </div>
+            <div class="field-row">
+              <div class="field">
+                <label for="q-email">Correo electrónico *</label>
+                <input type="email" id="q-email" name="email" required autocomplete="email" />
+              </div>
+              <div class="field">
+                <label for="q-phone">WhatsApp *</label>
+                <input type="tel" id="q-phone" name="phone" required autocomplete="tel" />
+              </div>
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend>¿Qué servicios te interesan? *</legend>
+            <div class="checkbox-grid" data-service-checkboxes>
+              <label class="checkbox-card">
+                <input type="checkbox" name="services" value="Asesoría y Acompañamiento" />
+                <span>Asesoría y Acompañamiento</span>
+              </label>
+              <label class="checkbox-card">
+                <input type="checkbox" name="services" value="Creación de Contenido" />
+                <span>Creación de Contenido</span>
+              </label>
+              <label class="checkbox-card">
+                <input type="checkbox" name="services" value="Pauta" />
+                <span>Pauta</span>
+              </label>
+              <label class="checkbox-card">
+                <input type="checkbox" name="services" value="Branding" />
+                <span>Branding</span>
+              </label>
+              <label class="checkbox-card">
+                <input type="checkbox" name="services" value="Podcast" />
+                <span>Podcast</span>
+              </label>
+              <label class="checkbox-card">
+                <input type="checkbox" name="services" value="Página Web" />
+                <span>Página Web</span>
+              </label>
+              <label class="checkbox-card">
+                <input type="checkbox" name="services" value="Cubrimiento de Eventos" />
+                <span>Cubrimiento de Eventos</span>
+              </label>
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend>Cuéntanos sobre tu proyecto</legend>
+            <div class="field">
+              <label for="q-notes">Notas adicionales (opcional)</label>
+              <textarea id="q-notes" name="notes" rows="4"></textarea>
+            </div>
+          </fieldset>
+
+          <button type="submit" class="btn btn-gradient" style="width: 100%;">
+            Descargar cotización en PDF
+            <svg width="18" height="18" aria-hidden="true"><use href="assets/icons.svg#icon-download"></use></svg>
+          </button>
+          <p class="quote-form__status" role="status" data-quote-status></p>
+        </form>
+      </div>
+    </section>
+
+    <!-- ===================== ALIANZAS ===================== -->
+    <section id="alianzas" class="partners">
+      <div class="container">
+        <div class="section-heading" data-reveal>
+          <span class="eyebrow">Alianzas</span>
+          <h2>Producción y ejecución más allá de lo digital</h2>
+          <p>Trabajamos con aliados de confianza para que tu marca también viva fuera de la pantalla.</p>
+        </div>
+
+        <ul class="partners__grid" data-reveal-group>
+          <li class="partner-card" data-reveal-item>
+            <div class="partner-card__icon">
+              <svg width="24" height="24" aria-hidden="true"><use href="assets/icons.svg#icon-package"></use></svg>
+            </div>
+            <h3>Empaques</h3>
+            <p>Diseño y producción de empaque para tu producto, coordinado con aliados de manufactura.</p>
+          </li>
+          <li class="partner-card" data-reveal-item>
+            <div class="partner-card__icon">
+              <svg width="24" height="24" aria-hidden="true"><use href="assets/icons.svg#icon-printer"></use></svg>
+            </div>
+            <h3>Impresos</h3>
+            <p>Material impreso para punto de venta, eventos y campañas.</p>
+          </li>
+          <li class="partner-card" data-reveal-item>
+            <div class="partner-card__icon">
+              <svg width="24" height="24" aria-hidden="true"><use href="assets/icons.svg#icon-monitor"></use></svg>
+            </div>
+            <h3>Pantallas digitales</h3>
+            <p>Contenido y coordinación para pantallas digitales en punto de venta o espacios públicos.</p>
+          </li>
+        </ul>
+
+        <p class="partners__note" data-reveal>
+          Nos encargamos de la <strong>ejecución</strong> completa: coordinamos
+          con nuestros aliados para que tú solo apruebes el resultado final.
+        </p>
+      </div>
+    </section>
+
+    <!-- ===================== PLANTILLAS ===================== -->
+    <section id="plantillas" class="templates">
+      <div class="container">
+        <div class="templates__banner" data-reveal>
+          <div>
+            <span class="eyebrow eyebrow--on-dark">Plantillas</span>
+            <h2>Recursos listos para que tu equipo ejecute</h2>
+            <p>Parrillas de contenido, guiones para UGC y más — para que no dependas de un diseñador para publicar.</p>
+            <div class="templates__tags">
+              <span>Parrillas de contenido</span>
+              <span>Guiones UGC</span>
+              <span>Y más</span>
+            </div>
+          </div>
+          <a href="#" class="btn btn-gradient" data-magnetic>
+            Ver plantillas en la tienda
+            <svg width="18" height="18" aria-hidden="true"><use href="assets/icons.svg#icon-bag"></use></svg>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== CTA FINAL ===================== -->
+    <section id="contacto" class="final-cta">
+      <div class="container final-cta__inner" data-reveal>
+        <h2>¿Listo para que tu marca navegue con nosotros?</h2>
+        <p>Cuéntanos sobre tu marca y te respondemos en menos de 24 horas hábiles.</p>
+        <a href="mailto:hola@agenciamares.com" class="btn btn-gradient btn-lg" data-magnetic>
+          Escríbenos: hola@agenciamares.com
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="site-footer">
+    <div class="container site-footer__inner">
+      <div>
+        <span class="brand--footer">
+          <span class="brand__mark" aria-hidden="true"></span>
+          Agencia Mares
+        </span>
+        <p>Marketing 360° con la fuerza de las mareas.</p>
+      </div>
+
+      <nav aria-label="Navegación del pie de página">
+        <h3>Navegación</h3>
+        <ul>
+          <li><a href="#servicios">Servicios</a></li>
+          <li><a href="#clientes">Clientes</a></li>
+          <li><a href="#cotizador">Cotizador</a></li>
+          <li><a href="#alianzas">Alianzas</a></li>
+          <li><a href="#plantillas">Plantillas</a></li>
+        </ul>
+      </nav>
+
+      <div>
+        <h3>Contacto</h3>
+        <ul>
+          <li>
+            <a href="mailto:hola@agenciamares.com" style="display:inline-flex;align-items:center;gap:.5rem;">
+              <svg width="16" height="16" aria-hidden="true"><use href="assets/icons.svg#icon-mail"></use></svg>
+              hola@agenciamares.com
+            </a>
+          </li>
+          <li>
+            <a href="tel:+525500000000" style="display:inline-flex;align-items:center;gap:.5rem;">
+              <svg width="16" height="16" aria-hidden="true"><use href="assets/icons.svg#icon-phone"></use></svg>
+              +52 55 0000 0000
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="container site-footer__bottom">
+      <p>© <span data-year></span> Agencia Mares. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+  <!-- GSAP (pinned to an exact version) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.15.0/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.15.0/ScrollTrigger.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.15.0/SplitText.min.js"></script>
+  <!-- jsPDF (pinned to an exact version) — powers the Cotizador's PDF export -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/4.2.1/jspdf.umd.min.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
