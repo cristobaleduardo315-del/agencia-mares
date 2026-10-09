@@ -357,6 +357,43 @@ body.menu-is-open { overflow: hidden; }
   100% { opacity: 0; transform: translateY(14px); }
 }
 
+/* ---------- Reel 2026 ---------- */
+.reel { background: var(--color-surface); padding-block: 100px 110px; overflow: hidden; }
+.reel__head { display: flex; flex-direction: column; align-items: center; text-align: center; margin-bottom: 42px; }
+.reel__head h2 { max-width: 720px; }
+.reel__frame {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--color-navy);
+  box-shadow: 0 50px 90px -50px rgba(35, 38, 59, 0.6), 0 0 0 1px var(--color-line);
+  transform-origin: 50% 0;
+  will-change: transform;
+}
+.reel__video { display: block; width: 100%; height: 100%; border: 0; background: var(--mares-cream); pointer-events: none; }
+.reel__sound, .reel__play {
+  position: absolute; bottom: 18px;
+  display: inline-flex; align-items: center; gap: 8px;
+  height: 44px; border-radius: 999px;
+  background: rgba(44, 48, 73, 0.78); color: var(--mares-cream);
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(239, 237, 234, 0.18);
+  font-size: 0.85rem; font-weight: 600;
+  transition: background 0.25s var(--ease-out), border-color 0.25s var(--ease-out);
+}
+.reel__sound { right: 18px; padding: 0 18px 0 14px; }
+.reel__play { left: 18px; width: 44px; justify-content: center; }
+.reel__sound:hover, .reel__play:hover { background: var(--color-orange); border-color: var(--color-orange); }
+.reel__sound[aria-pressed="true"] { background: var(--color-orange); border-color: var(--color-orange); }
+@media (max-width: 760px) {
+  .reel { padding-block: 70px 76px; }
+  .reel__frame { border-radius: var(--radius-md); }
+  .reel__sound, .reel__play { bottom: 10px; height: 38px; }
+  .reel__sound { right: 10px; padding: 0 12px 0 10px; }
+  .reel__play { left: 10px; width: 38px; }
+}
+
 /* ---------- Marquee ---------- */
 .marquee {
   padding: 26px 0;
@@ -775,7 +812,22 @@ html.has-mares-cursor .mares-cursor {
 .mares-cursor.is-hover .mares-cursor__inner { transform: scale(1.12); }
 .mares-cursor.is-hover.is-pressed .mares-cursor__inner { transform: scale(0.88); }
 .mares-cursor.is-hidden .mares-cursor__inner { opacity: 0; }
-.mares-cursor__arrow { fill: var(--cursor-color, #FF5630); stroke: #fff; stroke-width: 2; stroke-linejoin: round; paint-order: stroke; }
+.mares-cursor__arrow { fill: var(--cursor-color, #FF5630); stroke: #fff; stroke-width: 2; stroke-linejoin: round; paint-order: stroke; transition: fill 0.25s linear; }
+/* Etiqueta unida a la parte inferior derecha de la flecha */
+.mares-cursor__label {
+  position: absolute; left: 17px; top: 24px;
+  padding: 4px 10px 5px;
+  border-radius: 4px 10px 10px 10px;
+  background: var(--cursor-color, #FF5630);
+  border: 1.5px solid #fff;
+  color: #fff;
+  font-family: var(--font-body); font-size: 12px; font-weight: 600; line-height: 1.2; letter-spacing: 0.01em;
+  white-space: nowrap;
+  transition: background-color 0.25s linear, opacity 0.2s, transform 0.25s var(--ease-out);
+  transform-origin: 0 0;
+}
+/* Sobre botones y enlaces la etiqueta se recoge para no tapar el contenido */
+.mares-cursor.is-hover .mares-cursor__label { opacity: 0; transform: scale(0.6); }
 html.has-mares-cursor .mares-cursor-ring {
   display: block;
   position: fixed; left: 0; top: 0; z-index: 1999;
