@@ -426,6 +426,89 @@
   }
 
   /* ============================================================
+     Reel 2026 — the motion piece lives in reel.html (same origin)
+     and is driven through its small window.__player API. It grows
+     into place on scroll and only plays while it's on screen.
+     ============================================================ */
+  var reelFrame = document.querySelector("[data-reel]");
+  var reelIframe = document.querySelector("[data-reel-video]");
+  if (reelFrame && reelIframe) {
+    var reelSoundBtn = reelFrame.querySelector("[data-reel-sound]");
+    var reelSoundIcon = reelFrame.querySelector("[data-reel-sound-icon]");
+    var reelSoundLabel = reelFrame.querySelector("[data-reel-sound-label]");
+    var reelPlayBtn = reelFrame.querySelector("[data-reel-play]");
+    var reelPlayIcon = reelFrame.querySelector("[data-reel-play-icon]");
+    var ICON_MUTED = "M4 9v6h4l5 4V5L8 9H4zm12.5 3l2.6-2.6-1.1-1.1-2.6 2.6-2.6-2.6-1.1 1.1 2.6 2.6-2.6 2.6 1.1 1.1 2.6-2.6 2.6 2.6 1.1-1.1z";
+    var ICON_SOUND = "M4 9v6h4l5 4V5L8 9H4zm11.5 3a4.5 4.5 0 0 0-2.5-4v8a4.5 4.5 0 0 0 2.5-4zM13 3.2v2.1a7 7 0 0 1 0 13.4v2.1a9 9 0 0 0 0-17.6z";
+    var ICON_PAUSE = "M6 4.5h4v15H6zM14 4.5h4v15h-4z";
+    var ICON_PLAY = "M7 4.5v15l13-7.5z";
+    var userPaused = reduceMotion; /* con movimiento reducido no arranca solo */
+    var reelVisible = false;
+    var reelSoundOn = false;
+    var reelAudioCtx = null;
+
+    var reelPlayer = function () {
+      try { return reelIframe.contentWindow && reelIframe.contentWindow.__player; } catch (e) { return null; }
+    };
+    var syncReelUI = function () {
+      var pl = reelPlayer();
+      var isPlaying = !!(pl && pl.isPlaying());
+      reelPlayIcon.setAttribute("d", isPlaying ? ICON_PAUSE : ICON_PLAY);
+      reelPlayBtn.setAttribute("aria-label", isPlaying ? "Pausar reel" : "Reproducir reel");
+      reelSoundIcon.setAttribute("d", reelSoundOn ? ICON_SOUND : ICON_MUTED);
+      reelSoundBtn.setAttribute("aria-pressed", reelSoundOn ? "true" : "false");
+      reelSoundLabel.textContent = reelSoundOn ? "Silenciar" : "Activar sonido";
+    };
+    var applyReelState = function () {
+      var pl = reelPlayer();
+      if (!pl) return;
+      if (reelVisible && !userPaused) pl.play(); else pl.pause();
+      syncReelUI();
+    };
+    reelIframe.addEventListener("load", applyReelState);
+
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) { reelVisible = entry.isIntersecting; applyReelState(); });
+      }, { threshold: 0.35 }).observe(reelFrame);
+    } else {
+      reelVisible = true;
+    }
+
+    reelPlayBtn.addEventListener("click", function () {
+      var pl = reelPlayer();
+      if (!pl) return;
+      userPaused = pl.isPlaying();
+      reelVisible = true;
+      applyReelState();
+    });
+    reelSoundBtn.addEventListener("click", function () {
+      var pl = reelPlayer();
+      if (!pl) return;
+      reelSoundOn = !reelSoundOn;
+      /* The AudioContext is created here, inside the click, so browsers allow sound. */
+      if (reelSoundOn && !reelAudioCtx) {
+        var AC = window.AudioContext || window.webkitAudioContext;
+        if (AC) reelAudioCtx = new AC();
+      }
+      if (reelAudioCtx && reelAudioCtx.state === "suspended") reelAudioCtx.resume();
+      pl.setSound(reelSoundOn, reelAudioCtx);
+      if (reelSoundOn) { userPaused = false; reelVisible = true; applyReelState(); }
+      syncReelUI();
+    });
+    syncReelUI();
+
+    if (hasScrollTrigger && !reduceMotion) {
+      gsap.fromTo(reelFrame, { scale: 0.86, borderRadius: 48 }, {
+        scale: 1,
+        borderRadius: 28,
+        ease: "none",
+        scrollTrigger: { trigger: reelFrame, start: "top 95%", end: "top 35%", scrub: true }
+      });
+    }
+  }
+
+  /* ============================================================
      Magnetic buttons
      ============================================================ */
   var isTouch = window.matchMedia("(hover: none)").matches;
