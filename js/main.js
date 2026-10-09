@@ -98,6 +98,85 @@
   }
 
   /* ============================================================
+     Hero blobs — mouse parallax (desktop/hover only)
+     ============================================================ */
+  var heroSection = document.querySelector(".hero");
+  var blobBlue = document.querySelector(".hero__blob--blue");
+  var blobOrange = document.querySelector(".hero__blob--orange");
+  var isTouchEarly = window.matchMedia("(hover: none)").matches;
+  if (heroSection && blobBlue && blobOrange && hasGSAP && !isTouchEarly && !reduceMotion) {
+    heroSection.addEventListener("mousemove", function (e) {
+      var rect = heroSection.getBoundingClientRect();
+      var px = (e.clientX - rect.left) / rect.width - 0.5;
+      var py = (e.clientY - rect.top) / rect.height - 0.5;
+      gsap.to(blobBlue, { x: px * 40, y: py * 40, duration: 0.9, ease: "power2.out" });
+      gsap.to(blobOrange, { x: px * -55, y: py * -55, duration: 0.9, ease: "power2.out" });
+    });
+    heroSection.addEventListener("mouseleave", function () {
+      gsap.to([blobBlue, blobOrange], { x: 0, y: 0, duration: 1, ease: "power2.out" });
+    });
+  }
+
+  /* ============================================================
+     Section heading reveal — split words in, triggered on scroll.
+     Skips the hero title (handled separately above).
+     ============================================================ */
+  if (hasSplitText && hasScrollTrigger && !reduceMotion) {
+    var sectionHeadings = Array.prototype.slice
+      .call(document.querySelectorAll("main h2"))
+      .filter(function (h) { return !h.closest(".hero"); });
+
+    sectionHeadings.forEach(function (h) {
+      var headingSplit = new SplitText(h, { type: "words", wordsClass: "split-word" });
+      gsap.set(headingSplit.words, { opacity: 0, yPercent: 65 });
+      ScrollTrigger.create({
+        trigger: h,
+        start: "top 85%",
+        once: true,
+        onEnter: function () {
+          gsap.to(headingSplit.words, {
+            opacity: 1,
+            yPercent: 0,
+            duration: 0.8,
+            stagger: 0.045,
+            ease: "power3.out"
+          });
+        }
+      });
+    });
+  }
+
+  /* ============================================================
+     Statement section — big lines slide in, alternating sides
+     ============================================================ */
+  if (hasSplitText && hasScrollTrigger && !reduceMotion) {
+    var statementLines = Array.prototype.slice.call(document.querySelectorAll("[data-split-line]"));
+    statementLines.forEach(function (line, i) {
+      var lineSplit = new SplitText(line, { type: "words", wordsClass: "split-word" });
+      var fromX = i % 2 === 0 ? -70 : 70;
+      gsap.set(lineSplit.words, { opacity: 0, x: fromX });
+      ScrollTrigger.create({
+        trigger: line,
+        start: "top 88%",
+        once: true,
+        onEnter: function () {
+          gsap.to(lineSplit.words, {
+            opacity: 1,
+            x: 0,
+            duration: 0.85,
+            stagger: 0.05,
+            ease: "power3.out"
+          });
+        }
+      });
+    });
+  } else {
+    document.querySelectorAll("[data-split-line]").forEach(function (line) {
+      line.style.opacity = "1";
+    });
+  }
+
+  /* ============================================================
      Scroll reveals: [data-reveal] and [data-reveal-group] > [data-reveal-item]
      Uses ScrollTrigger when available; otherwise IntersectionObserver
      drives the same .is-revealed class the CSS already understands.
@@ -105,6 +184,16 @@
   var revealTargets = Array.prototype.slice.call(
     document.querySelectorAll("[data-reveal], [data-reveal-item]")
   );
+
+  // Alternate cards inside a reveal-group left/right so they fan in from
+  // opposite sides instead of all rising the same way (set before the
+  // ScrollTrigger pass below so the CSS transform starts from the right spot).
+  document.querySelectorAll("[data-reveal-group]").forEach(function (group) {
+    var items = group.querySelectorAll("[data-reveal-item]");
+    items.forEach(function (item, i) {
+      item.classList.add(i % 2 === 0 ? "reveal-item--left" : "reveal-item--right");
+    });
+  });
 
   if (hasScrollTrigger) {
     revealTargets.forEach(function (el, i) {
@@ -117,8 +206,10 @@
         onEnter: function () {
           gsap.to(el, {
             opacity: 1,
+            x: 0,
             y: 0,
-            duration: 0.7,
+            rotate: 0,
+            duration: 0.75,
             delay: delay,
             ease: "power3.out",
             onStart: function () { el.classList.add("is-revealed"); }
