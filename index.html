@@ -91,8 +91,8 @@
     </section>
 
     <!-- ===================== MARQUEE ===================== -->
-    <section class="marquee" aria-label="Áreas de servicio">
-      <div class="marquee__track" data-marquee aria-hidden="true">
+    <section class="marquee marquee--duo" aria-label="Áreas de servicio">
+      <div class="marquee__track marquee__track--a" data-marquee aria-hidden="true">
         <span>Asesoría</span><span>·</span>
         <span>Contenido</span><span>·</span>
         <span>Pauta</span><span>·</span>
@@ -108,7 +108,26 @@
         <span>Web</span><span>·</span>
         <span>Eventos</span><span>·</span>
       </div>
+      <div class="marquee__track marquee__track--b" aria-hidden="true">
+        <span>Marketing 360°</span><span>·</span>
+        <span>Do Big Things</span><span>·</span>
+        <span>Marca</span><span>·</span>
+        <span>Resultados</span><span>·</span>
+        <span>Marketing 360°</span><span>·</span>
+        <span>Do Big Things</span><span>·</span>
+        <span>Marca</span><span>·</span>
+        <span>Resultados</span><span>·</span>
+      </div>
       <p class="sr-only">Servicios: Asesoría, Contenido, Pauta, Branding, Podcast, Web, Eventos.</p>
+    </section>
+
+    <!-- ===================== STATEMENT (texto grande con reveal) ===================== -->
+    <section class="statement">
+      <div class="container statement__inner">
+        <p class="statement__line" data-split-line>Estrategia clara,</p>
+        <p class="statement__line statement__line--accent" data-split-line>contenido que conecta,</p>
+        <p class="statement__line" data-split-line>resultados que se notan.</p>
+      </div>
     </section>
 
     <!-- ===================== SERVICIOS ===================== -->
@@ -312,7 +331,7 @@
     <!-- ===================== COTIZADOR ===================== -->
     <section id="cotizador" class="quote">
       <div class="container quote__grid">
-        <div class="quote__intro" data-reveal>
+        <div class="quote__intro" data-reveal="left">
           <span class="eyebrow">Cotizador</span>
           <h2>Arma tu cotización en minutos</h2>
           <p>Elige los servicios que te interesan y descarga un resumen en PDF. Te contactamos para afinar el presupuesto.</p>
@@ -324,7 +343,7 @@
           </ul>
         </div>
 
-        <form class="quote-form" data-quote-form novalidate data-reveal>
+        <form class="quote-form" data-quote-form novalidate data-reveal="right">
           <fieldset>
             <legend>Tus datos</legend>
             <div class="field-row">
