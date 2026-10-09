@@ -1,6 +1,7 @@
 (function () {
   "use strict";
 
+  var root = document.documentElement;
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var hasGSAP = typeof window.gsap !== "undefined";
   var hasScrollTrigger = hasGSAP && typeof window.ScrollTrigger !== "undefined";
@@ -9,6 +10,93 @@
   if (hasScrollTrigger) {
     gsap.registerPlugin(ScrollTrigger);
     if (hasSplitText) gsap.registerPlugin(SplitText);
+  }
+
+  /* Small rAF tween so the preloader never depends on a CDN. */
+  function tween(from, to, duration, ease, onUpdate, onDone) {
+    var start = null;
+    function frame(now) {
+      if (start === null) start = now;
+      var t = Math.min(1, (now - start) / (duration * 1000));
+      onUpdate(from + (to - from) * ease(t));
+      if (t < 1) requestAnimationFrame(frame);
+      else if (onDone) onDone();
+    }
+    requestAnimationFrame(frame);
+  }
+  function easeInOutCubic(t) { return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; }
+  function easeOutExpo(t) { return t === 1 ? 1 : 1 - Math.pow(2, -10 * t); }
+
+  /* ============================================================
+     Site-ready gate: things that should play right after the
+     preloader (hero reveal) wait for this.
+     ============================================================ */
+  var siteReady = false;
+  var readyQueue = [];
+  function onSiteReady(fn) { if (siteReady) fn(); else readyQueue.push(fn); }
+  function markSiteReady() {
+    if (siteReady) return;
+    siteReady = true;
+    root.classList.remove("preloading");
+    readyQueue.forEach(function (fn) { fn(); });
+    readyQueue = [];
+    if (hasScrollTrigger) ScrollTrigger.refresh();
+  }
+
+  /* ============================================================
+     Preloader — MARES PALABRA goes from cream (01) to the
+     navy → orange gradient (02/03) with a slanted wipe.
+     ============================================================ */
+  var preloader = document.querySelector("[data-preloader]");
+  if (!preloader || reduceMotion) {
+    if (preloader) preloader.parentNode.removeChild(preloader);
+    markSiteReady();
+  } else {
+    var plFill = preloader.querySelector("[data-preloader-fill]");
+    var plCounts = preloader.querySelectorAll("[data-preloader-count]");
+    var plLogos = preloader.querySelectorAll(".preloader__logo");
+    var pageLoaded = document.readyState === "complete";
+    window.addEventListener("load", function () { pageLoaded = true; });
+
+    var SLANT = 14;
+    var renderPreloader = function (p) {
+      var top = p * (100 + SLANT);
+      var bottom = top - SLANT;
+      plFill.style.setProperty("--pl-edge-top", top + "%");
+      plFill.style.setProperty("--pl-edge-bot", bottom + "%");
+      var label = Math.round(p * 100) + "%";
+      for (var i = 0; i < plCounts.length; i++) plCounts[i].textContent = label;
+      var s = 0.94 + 0.06 * p;
+      for (var j = 0; j < plLogos.length; j++) plLogos[j].style.transform = "scale(" + s + ")";
+    };
+    renderPreloader(0);
+
+    var exitPreloader = function () {
+      preloader.classList.add("is-done");
+      preloader.style.animation = "none";
+      window.setTimeout(markSiteReady, 380);
+      tween(0, 1, 0.95, easeInOutCubic, function (v) {
+        preloader.style.transform = "translate3d(0," + (-100 * v) + "%,0)";
+      }, function () {
+        if (preloader.parentNode) preloader.parentNode.removeChild(preloader);
+      });
+    };
+
+    var waitForLoad = function (cb) {
+      var waited = 0;
+      (function check() {
+        if (pageLoaded || waited >= 2500) cb();
+        else { waited += 100; window.setTimeout(check, 100); }
+      })();
+    };
+
+    tween(0, 0.82, 1.25, easeInOutCubic, renderPreloader, function () {
+      waitForLoad(function () {
+        tween(0.82, 1, 0.45, easeOutExpo, renderPreloader, function () {
+          window.setTimeout(exitPreloader, 320);
+        });
+      });
+    });
   }
 
   /* ============================================================
@@ -70,25 +158,32 @@
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 
   /* ============================================================
-     Hero title reveal (SplitText if available, CSS fade fallback)
+     Masked word reveal (each word slides up from behind its own
+     clipping box — exponential ease-out, short cascade).
      ============================================================ */
+  function maskedWords(el) {
+    return new SplitText(el, { type: "words", mask: "words", wordsClass: "split-word" });
+  }
+
   var heroTitle = document.querySelector("[data-hero-title]");
   if (heroTitle && !reduceMotion) {
     if (hasSplitText) {
-      var split = new SplitText(heroTitle, { type: "words" });
-      gsap.from(split.words, {
-        yPercent: 130,
-        opacity: 0,
-        duration: 0.9,
-        stagger: 0.06,
-        ease: "power3.out",
-        delay: 0.15
+      var heroSplit = maskedWords(heroTitle);
+      gsap.set(heroSplit.words, { yPercent: 115 });
+      onSiteReady(function () {
+        gsap.to(heroSplit.words, {
+          yPercent: 0,
+          duration: 0.9,
+          stagger: 0.085,
+          ease: "expo.out",
+          delay: 0.1
+        });
       });
     } else {
       heroTitle.style.opacity = "0";
       heroTitle.style.transform = "translateY(24px)";
-      heroTitle.style.transition = "opacity 0.8s cubic-bezier(0.16,0.84,0.24,1), transform 0.8s cubic-bezier(0.16,0.84,0.24,1)";
-      requestAnimationFrame(function () {
+      heroTitle.style.transition = "opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1)";
+      onSiteReady(function () {
         requestAnimationFrame(function () {
           heroTitle.style.opacity = "1";
           heroTitle.style.transform = "translateY(0)";
@@ -118,8 +213,7 @@
   }
 
   /* ============================================================
-     Section heading reveal — split words in, triggered on scroll.
-     Skips the hero title (handled separately above).
+     Section headings — masked word reveal on scroll.
      ============================================================ */
   if (hasSplitText && hasScrollTrigger && !reduceMotion) {
     var sectionHeadings = Array.prototype.slice
@@ -127,19 +221,18 @@
       .filter(function (h) { return !h.closest(".hero"); });
 
     sectionHeadings.forEach(function (h) {
-      var headingSplit = new SplitText(h, { type: "words", wordsClass: "split-word" });
-      gsap.set(headingSplit.words, { opacity: 0, yPercent: 65 });
+      var headingSplit = maskedWords(h);
+      gsap.set(headingSplit.words, { yPercent: 115 });
       ScrollTrigger.create({
         trigger: h,
-        start: "top 85%",
+        start: "top 86%",
         once: true,
         onEnter: function () {
           gsap.to(headingSplit.words, {
-            opacity: 1,
             yPercent: 0,
             duration: 0.8,
-            stagger: 0.045,
-            ease: "power3.out"
+            stagger: 0.075,
+            ease: "expo.out"
           });
         }
       });
@@ -170,6 +263,16 @@
         }
       });
     });
+
+    var statementWave = document.querySelector("[data-statement-wave]");
+    if (statementWave) {
+      gsap.fromTo(statementWave, { xPercent: 14, rotate: -3 }, {
+        xPercent: -10,
+        rotate: 2,
+        ease: "none",
+        scrollTrigger: { trigger: ".statement", start: "top bottom", end: "bottom top", scrub: true }
+      });
+    }
   } else {
     document.querySelectorAll("[data-split-line]").forEach(function (line) {
       line.style.opacity = "1";
@@ -180,19 +283,37 @@
      Scroll reveals: [data-reveal] and [data-reveal-group] > [data-reveal-item]
      Uses ScrollTrigger when available; otherwise IntersectionObserver
      drives the same .is-revealed class the CSS already understands.
+     Hero elements wait for the preloader to finish.
      ============================================================ */
   var revealTargets = Array.prototype.slice.call(
     document.querySelectorAll("[data-reveal], [data-reveal-item]")
   );
 
-  // Alternate cards inside a reveal-group left/right so they fan in from
-  // opposite sides instead of all rising the same way (set before the
-  // ScrollTrigger pass below so the CSS transform starts from the right spot).
   document.querySelectorAll("[data-reveal-group]").forEach(function (group) {
     var items = group.querySelectorAll("[data-reveal-item]");
     items.forEach(function (item, i) {
       item.classList.add(i % 2 === 0 ? "reveal-item--left" : "reveal-item--right");
     });
+  });
+
+  function revealNow(el, delay) {
+    if (hasGSAP) {
+      gsap.to(el, {
+        opacity: 1, x: 0, y: 0, rotate: 0,
+        duration: 0.75, delay: delay, ease: "power3.out",
+        onStart: function () { el.classList.add("is-revealed"); }
+      });
+    } else {
+      window.setTimeout(function () { el.classList.add("is-revealed"); }, delay * 1000);
+    }
+  }
+
+  var heroIndex = 0;
+  revealTargets = revealTargets.filter(function (el) {
+    if (!el.closest(".hero")) return true;
+    var d = 0.45 + heroIndex++ * 0.12;
+    onSiteReady(function () { revealNow(el, d); });
+    return false;
   });
 
   if (hasScrollTrigger) {
@@ -203,18 +324,7 @@
         trigger: el,
         start: "top 88%",
         once: true,
-        onEnter: function () {
-          gsap.to(el, {
-            opacity: 1,
-            x: 0,
-            y: 0,
-            rotate: 0,
-            duration: 0.75,
-            delay: delay,
-            ease: "power3.out",
-            onStart: function () { el.classList.add("is-revealed"); }
-          });
-        }
+        onEnter: function () { revealNow(el, delay); }
       });
     });
   } else if ("IntersectionObserver" in window) {
@@ -232,6 +342,87 @@
     revealTargets.forEach(function (el) { revealObserver.observe(el); });
   } else {
     revealTargets.forEach(function (el) { el.classList.add("is-revealed"); });
+  }
+
+  /* ============================================================
+     Scroll position → brand colour. Feeds both the MARES OLA
+     progress indicator and the cursor tint.
+     Stops follow the corporate gradient: orange → plum → navy → orange.
+     ============================================================ */
+  var COLOR_STOPS = [
+    [0, [255, 86, 48]],
+    [0.35, [107, 63, 92]],
+    [0.7, [44, 48, 73]],
+    [1, [255, 86, 48]]
+  ];
+  function colorAt(p) {
+    for (var i = 1; i < COLOR_STOPS.length; i++) {
+      if (p <= COLOR_STOPS[i][0]) {
+        var a = COLOR_STOPS[i - 1], b = COLOR_STOPS[i];
+        var t = (p - a[0]) / (b[0] - a[0]);
+        var c = [0, 1, 2].map(function (k) { return Math.round(a[1][k] + (b[1][k] - a[1][k]) * t); });
+        return "rgb(" + c.join(",") + ")";
+      }
+    }
+    return "rgb(255,86,48)";
+  }
+
+  var waveProgress = document.querySelector("[data-wave-progress]");
+  var waveClip = document.querySelector("[data-wave-clip]");
+  var scrollTicking = false;
+  function updateScrollProgress() {
+    scrollTicking = false;
+    var y = window.scrollY || window.pageYOffset;
+    var max = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+    var p = Math.min(1, Math.max(0, y / max));
+    root.style.setProperty("--cursor-color", colorAt(p));
+    if (waveClip) waveClip.setAttribute("width", (p * 1052).toFixed(1));
+    if (waveProgress) {
+      waveProgress.classList.toggle("is-visible", y > window.innerHeight * 0.4);
+      waveProgress.setAttribute("aria-label", "Volver arriba (" + Math.round(p * 100) + "% recorrido)");
+    }
+  }
+  window.addEventListener("scroll", function () {
+    if (!scrollTicking) { scrollTicking = true; requestAnimationFrame(updateScrollProgress); }
+  }, { passive: true });
+  window.addEventListener("resize", updateScrollProgress);
+  updateScrollProgress();
+
+  /* ============================================================
+     macOS-style cursor: orange arrow, 2px white outline. Scales to
+     0.88 on press and emits an expanding ring. Mouse devices only.
+     ============================================================ */
+  var cursor = document.querySelector("[data-cursor]");
+  var cursorRing = document.querySelector("[data-cursor-ring]");
+  var finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+  if (cursor && finePointer) {
+    var cx = -100, cy = -100, cursorQueued = false;
+    var paintCursor = function () {
+      cursorQueued = false;
+      cursor.style.transform = "translate3d(" + (cx - 3) + "px," + (cy - 3) + "px,0)";
+    };
+    window.addEventListener("mousemove", function (e) {
+      cx = e.clientX; cy = e.clientY;
+      if (!root.classList.contains("has-mares-cursor")) root.classList.add("has-mares-cursor");
+      cursor.classList.remove("is-hidden");
+      if (!cursorQueued) { cursorQueued = true; requestAnimationFrame(paintCursor); }
+    }, { passive: true });
+    document.addEventListener("mouseleave", function () { cursor.classList.add("is-hidden"); });
+    document.addEventListener("mouseover", function (e) {
+      var interactive = e.target.closest && e.target.closest("a, button, label, input, textarea, select, [role='button']");
+      cursor.classList.toggle("is-hover", !!interactive);
+    });
+    window.addEventListener("mousedown", function () {
+      cursor.classList.add("is-pressed");
+      if (cursorRing && !reduceMotion && cursorRing.animate) {
+        cursorRing.animate([
+          { transform: "translate3d(" + (cx - 22) + "px," + (cy - 22) + "px,0) scale(0.3)", opacity: 0.9 },
+          { transform: "translate3d(" + (cx - 22) + "px," + (cy - 22) + "px,0) scale(1.7)", opacity: 0 }
+        ], { duration: 520, easing: "cubic-bezier(0.16, 1, 0.3, 1)" });
+      }
+    });
+    window.addEventListener("mouseup", function () { cursor.classList.remove("is-pressed"); });
+    window.addEventListener("blur", function () { cursor.classList.remove("is-pressed"); });
   }
 
   /* ============================================================
