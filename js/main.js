@@ -596,45 +596,6 @@
   }
 
   /* ============================================================
-     Clientes — pinned horizontal scroll carousel
-     ============================================================ */
-  var clientsSection = document.querySelector("[data-clients]");
-  var clientsViewport = document.querySelector("[data-clients-viewport]");
-  var clientsTrack = document.querySelector("[data-clients-track]");
-
-  if (clientsSection && clientsViewport && clientsTrack && hasScrollTrigger && !reduceMotion) {
-    var setPin = function () {
-      var scrollDistance = clientsTrack.scrollWidth - clientsViewport.clientWidth;
-      if (scrollDistance <= 0) return null;
-
-      clientsSection.setAttribute("data-pinned", "");
-
-      return ScrollTrigger.create({
-        trigger: clientsSection,
-        start: "top top",
-        end: "+=" + (scrollDistance + window.innerHeight * 0.3),
-        pin: true,
-        scrub: 1,
-        invalidateOnRefresh: true,
-        animation: gsap.to(clientsTrack, {
-          x: -scrollDistance,
-          ease: "none"
-        })
-      });
-    };
-
-    var pinInstance = setPin();
-    window.addEventListener("resize", function () {
-      if (pinInstance) pinInstance.kill();
-      gsap.set(clientsTrack, { x: 0 });
-      pinInstance = setPin();
-      ScrollTrigger.refresh();
-    });
-  }
-  /* If GSAP/ScrollTrigger is unavailable, clients__viewport falls back to
-     native horizontal scrolling via the CSS :not([data-pinned]) rule. */
-
-  /* ============================================================
      Cotizador — validation + PDF export
      ============================================================ */
   var quoteForm = document.querySelector("[data-quote-form]");
